@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native';
+import Display from './components/display';
+import Btn from './components/botao';
 
 export default function App() {
   
@@ -14,51 +16,41 @@ export default function App() {
   return (
     <SafeAreaView style={estilos.conteiner}>
       <Text>Calculadora - Rodrigo</Text>
-      <View style={estilos.display}>
-        <TextInput
-          style={estilos.txtDspOper}
-          value={String(operacao)}
-          onChangeText={(texto)=>{setOperacao(texto)}}
-        ></TextInput>
-        
-        <TextInput
-          style={estilos.txtDspRes}
-          value={String(resultado)}
-        ></TextInput>
+      <Display valor={0} res={0}/>
+      <View style={estilos.botoes}>
+        <Btn label="AC" ac aoClicar={()=>{}}></Btn>
+        <Btn label="(" aoClicar={()=>{}}></Btn>
+        <Btn label=")" aoClicar={()=>{}}></Btn>
+        <Btn label="/" operacao aoClicar={()=>{}}></Btn>
+        <Btn label="7" aoClicar={()=>{}}></Btn>
+        <Btn label="8" aoClicar={()=>{}}></Btn>
+        <Btn label="9" aoClicar={()=>{}}></Btn>
+        <Btn label="*" operacao aoClicar={()=>{}}></Btn>
+        <Btn label="4" aoClicar={()=>{}}></Btn>
+        <Btn label="5" aoClicar={()=>{}}></Btn>
+        <Btn label="6" aoClicar={()=>{}}></Btn>
+        <Btn label="-" operacao aoClicar={()=>{}}></Btn>
+        <Btn label="1" aoClicar={()=>{}}></Btn>
+        <Btn label="2" aoClicar={()=>{}}></Btn>
+        <Btn label="3" aoClicar={()=>{}}></Btn>
+        <Btn label="+" operacao aoClicar={()=>{}}></Btn>
+        <Btn label="0" aoClicar={()=>{}}></Btn>
+        <Btn label="." operacao aoClicar={()=>{}}></Btn>
+        <Btn label="<-" bs aoClicar={()=>{}}></Btn>
+        <Btn label="=" igual aoClicar={()=>{}}></Btn>
       </View>
-
-      <View>
-        <TouchableHighlight
-          style={estilos.btn}
-          onPress={()=>operar()}
-        >
-          <Text>OPERAR</Text>
-        </TouchableHighlight>
-      </View>
-
     </SafeAreaView>
   );
 }
 
 const estilos = StyleSheet.create({
   conteiner:{
-
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
-  display:{
-    backgroundColor: '#333',
-    padding: 10
-  },
-  txtDspOper:{
-    color: '#fff'
-  },
-  txtDspRes:{
-    color: '#fff'
-  },
-  btn:{
-    backgroundColor: '#aaa',
-    padding:20
-  },
-  txtBtn:{
-
+  botoes:{
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   }
 });
