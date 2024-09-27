@@ -19,7 +19,22 @@ export default function App() {
   const [vres, setVres] = useState(estados.resultado)
 
   const addDigito=(d)=>{
+    if(d=='+' || d=='-' || d=='/' || d=='*'){
+      estados.ponto=false
+    }
 
+    if(d=='.' && !estados.ponto){
+      estados.ponto=true
+      estados.operado=false
+
+    } else if(d=='.' && estados.ponto){
+      return
+    }
+
+    if((d=='+' || d=='-' || d=='/' || d=='*') && estados.operado){
+      estados.valorTela=estados.resultado
+      estados.resultado=0
+    }
     estados.valorTela=estados.valorTela+d
     setVtela(estados.valorTela)
     setVres(estados.resultado)
@@ -37,14 +52,25 @@ export default function App() {
     setVres(estados.resultado)
   }
 
-  const opera=(o)=>{
+  const opera=(d)=>{
     if(d=='AC'){
       limparTela()
       return
     }
 
     if(d=='BS'){
-      const vt=vtela.substring(0,(vtela.length-1))
+      estados.valorTela=vtela.substring(0,(vtela.length-1))
+      setVtela(estados.valorTela)
+      return
+    }
+    try{
+      estados.resultado=eval(estados.valorTela)
+      estados.operado=true
+      setVres(estados.resultado)
+    } catch {
+      estados.resultado=eval('Operação Inválida')
+      estados.operado=true
+      setVres(estados.resultado)
     }
   }
 
@@ -72,7 +98,7 @@ export default function App() {
         <Btn label="0" aoClicar={()=>{addDigito('0')}}></Btn>
         <Btn label="." operacao aoClicar={()=>{addDigito('.')}}></Btn>
         <Btn label="<-" bs aoClicar={()=>{opera('BS')}}></Btn>
-        <Btn label="=" igual aoClicar={()=>{}}></Btn>
+        <Btn label="=" igual aoClicar={()=>{opera('=')}}></Btn>
       </View>
     </SafeAreaView>
   );
